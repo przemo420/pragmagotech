@@ -8,14 +8,16 @@ use InvalidArgumentException;
 use PragmaGoTech\Interview\CalculatorStrategy\CalculatorStrategyInterface;
 use PragmaGoTech\Interview\Model\LoanProposal;
 use PragmaGoTech\Interview\Resolver\TermFeeResolverInterface;
-use PragmaGoTech\Interview\Validator\LoadProposalValidatorInterface;
+use PragmaGoTech\Interview\RoundingStrategy\RoundingStrategyInterface;
+use PragmaGoTech\Interview\Validator\LoanProposalValidatorInterface;
 
 class FeeCalculator implements FeeCalculatorInterface
 {
     private CalculatorStrategyInterface $calculatorStrategy;
+    private RoundingStrategyInterface   $roundingStrategy;
 
     public function __construct(
-        protected LoadProposalValidatorInterface $validator,
+        protected LoanProposalValidatorInterface $validator,
         protected TermFeeResolverInterface       $resolver,
     )
     {
@@ -36,11 +38,16 @@ class FeeCalculator implements FeeCalculatorInterface
 
         $fee = $this->calculatorStrategy->calculate($amount, $fees);
 
-        return ceil($fee / 5) * 5;
+        return $this->roundingStrategy->round($fee + $amount) - $amount;
     }
 
     public function setCalculatorStrategy(CalculatorStrategyInterface $calculatorStrategy): void
     {
         $this->calculatorStrategy = $calculatorStrategy;
+    }
+
+    public function setRoundingStrategy(RoundingStrategyInterface $roundingStrategy): void
+    {
+        $this->roundingStrategy = $roundingStrategy;
     }
 }

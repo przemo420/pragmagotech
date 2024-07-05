@@ -7,7 +7,7 @@ namespace PragmaGoTech\Interview\Validator;
 use InvalidArgumentException;
 use PragmaGoTech\Interview\Model\LoanProposal;
 
-class LoanProposalValidator implements LoadProposalValidatorInterface
+class LoanProposalValidator implements LoanProposalValidatorInterface
 {
     /**
      * @throws InvalidArgumentException

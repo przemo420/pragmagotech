@@ -8,6 +8,7 @@ use PragmaGoTech\Interview\CalculatorStrategy\TermCalculatorStrategy;
 use PragmaGoTech\Interview\Enum\FeeTerm;
 use PragmaGoTech\Interview\Model\LoanProposal;
 use PragmaGoTech\Interview\Resolver\TermFeeResolver;
+use PragmaGoTech\Interview\RoundingStrategy\NearestFiveRoundingStrategy;
 use PragmaGoTech\Interview\Service\FeeCalculator;
 use PragmaGoTech\Interview\Validator\LoanProposalValidator;
 
@@ -21,6 +22,7 @@ $feeCalculator = new FeeCalculator(
     new TermFeeResolver,
 );
 $feeCalculator->setCalculatorStrategy(new TermCalculatorStrategy);
+$feeCalculator->setRoundingStrategy(new NearestFiveRoundingStrategy);
 
 var_dump(
     $feeCalculator->calculate($loanProposal12),

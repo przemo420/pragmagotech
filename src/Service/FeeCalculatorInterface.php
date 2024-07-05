@@ -6,6 +6,7 @@ namespace PragmaGoTech\Interview\Service;
 
 use PragmaGoTech\Interview\CalculatorStrategy\CalculatorStrategyInterface;
 use PragmaGoTech\Interview\Model\LoanProposal;
+use PragmaGoTech\Interview\RoundingStrategy\RoundingStrategyInterface;
 
 interface FeeCalculatorInterface
 {
@@ -15,4 +16,5 @@ interface FeeCalculatorInterface
     public function calculate(LoanProposal $application): float;
 
     public function setCalculatorStrategy(CalculatorStrategyInterface $calculatorStrategy);
+    public function setRoundingStrategy(RoundingStrategyInterface $roundingStrategy);
 }
