@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace PragmaGoTech\Interview\Model\Term;
 
-use PragmaGoTech\Interview\Interface\FeeTermInterface;
-
 class FeeTerm12 implements FeeTermInterface
 {
     public function getTerm(): int

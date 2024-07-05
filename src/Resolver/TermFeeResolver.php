@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace PragmaGoTech\Interview\Service;
+namespace PragmaGoTech\Interview\Resolver;
 
 use InvalidArgumentException;
 use PragmaGoTech\Interview\Enum\FeeTerm;
-use PragmaGoTech\Interview\Interface\FeeTermInterface;
 use PragmaGoTech\Interview\Model\Term\FeeTerm12;
 use PragmaGoTech\Interview\Model\Term\FeeTerm24;
+use PragmaGoTech\Interview\Model\Term\FeeTermInterface;
 
-class FeeCalculatorResolver
+class TermFeeResolver implements TermFeeResolverInterface
 {
     /**
      * @throws InvalidArgumentException

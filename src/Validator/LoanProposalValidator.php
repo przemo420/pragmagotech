@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PragmaGoTech\Interview\Service;
+namespace PragmaGoTech\Interview\Validator;
 
 use InvalidArgumentException;
 use PragmaGoTech\Interview\Model\LoanProposal;
 
-class FeeCalculatorValidator
+class LoanProposalValidator implements LoadProposalValidatorInterface
 {
     /**
      * @throws InvalidArgumentException

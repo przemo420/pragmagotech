@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PragmaGoTech\Interview\Interface;
+namespace PragmaGoTech\Interview\Model\Term;
 
 interface FeeTermInterface
 {

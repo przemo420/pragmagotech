@@ -5,18 +5,20 @@ declare(strict_types=1);
 namespace PragmaGoTech\Interview\Service;
 
 use InvalidArgumentException;
-use PragmaGoTech\Interview\Interface\FeeCalculatorInterface;
+use PragmaGoTech\Interview\CalculatorStrategy\CalculatorStrategyInterface;
 use PragmaGoTech\Interview\Model\LoanProposal;
+use PragmaGoTech\Interview\Resolver\TermFeeResolverInterface;
+use PragmaGoTech\Interview\Validator\LoadProposalValidatorInterface;
 
 class FeeCalculator implements FeeCalculatorInterface
 {
-    private FeeCalculatorValidator $validator;
-    private FeeCalculatorResolver  $resolver;
+    private CalculatorStrategyInterface $calculatorStrategy;
 
-    public function __construct()
+    public function __construct(
+        protected LoadProposalValidatorInterface $validator,
+        protected TermFeeResolverInterface       $resolver,
+    )
     {
-        $this->validator = new FeeCalculatorValidator;
-        $this->resolver  = new FeeCalculatorResolver;
     }
 
     /**
@@ -32,28 +34,13 @@ class FeeCalculator implements FeeCalculatorInterface
         $termResolved = $this->resolver->resolve($term);
         $fees         = $termResolved->getFees();
 
-        if (isset($fees[$amount])) {
-            return $fees[$amount];
-        }
-
-        $feeBound = $this->findFeeBound($amount, $fees);
-        $feeTerm  = $fees[$feeBound];
-        $fee      = $feeTerm / $feeBound * $amount;
+        $fee = $this->calculatorStrategy->calculate($amount, $fees);
 
         return ceil($fee / 5) * 5;
     }
 
-    private function findFeeBound(float $amount, array $fees): int
+    public function setCalculatorStrategy(CalculatorStrategyInterface $calculatorStrategy): void
     {
-        $feeKeys = array_keys($fees);
-        for ($i = 0; $i < $feeKeys; $i++) {
-            if ($amount > $feeKeys[$i + 1]) {
-                continue;
-            }
-
-            return $feeKeys[$i];
-        }
-
-        throw new InvalidArgumentException("Can not find a fee for amount $amount");
+        $this->calculatorStrategy = $calculatorStrategy;
     }
 }
